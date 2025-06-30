@@ -1,3 +1,5 @@
+if not lib.checkDependency('ox_lib', '3.30.0', true) then return end
+
 local QBCore = exports['qb-core']:GetCoreObject()
 
 local function exploitBan(id, reason)
@@ -30,7 +32,7 @@ RegisterNetEvent('qb-pawnshop:server:sellPawnItems', function(itemName, itemAmou
         end
     end
     if dist > 5 then
-        exploitBan(src, 'sellPawnItems Exploiting')
+        exploitBan(src, 'Sell Pawn Items Exploiting')
         return
     end
     if exports['qb-inventory']:RemoveItem(src, itemName, tonumber(itemAmount), false, 'qb-pawnshop:server:sellPawnItems') then
@@ -73,7 +75,7 @@ RegisterNetEvent('qb-pawnshop:server:pickupMelted', function(item)
         end
     end
     if dist > 5 then
-        exploitBan(src, 'pickupMelted Exploiting')
+        exploitBan(src, 'Pickup Melted Items Exploiting')
         return
     end
     for _, v in pairs(item.items) do
@@ -92,8 +94,15 @@ RegisterNetEvent('qb-pawnshop:server:pickupMelted', function(item)
     TriggerClientEvent('qb-pawnshop:client:openMenu', src)
 end)
 
-QBCore.Functions.CreateCallback('qb-pawnshop:server:getInv', function(source, cb)
+-- QBCore.Functions.CreateCallback('qb-pawnshop:server:getInv', function(source, cb)
+--     local Player = QBCore.Functions.GetPlayer(source)
+--     local inventory = Player.PlayerData.items
+--     return cb(inventory)
+-- end)
+
+lib.callback.register('qb-pawnshop:server:getInv', function(source)
     local Player = QBCore.Functions.GetPlayer(source)
     local inventory = Player.PlayerData.items
-    return cb(inventory)
+
+    return inventory
 end)

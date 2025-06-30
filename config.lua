@@ -2,16 +2,16 @@ Config = Config or {}
 
 Config.PawnLocation = {
     [1] = {
-            coords = vector3(412.34, 314.81, 103.13),
-            length = 1.5,
-            width = 1.8,
-            heading = 207.0,
-            debugPoly = false,
-            minZ = 100.97,
-            maxZ = 105.42,
-            distance = 3.0
-        },
-    }
+        coords = vector3(412.34, 314.81, 103.13),
+        length = 2.0,
+        width = 2.0,
+        heading = 207.0,
+        debugPoly = false,
+        minZ = 100.97,
+        maxZ = 105.42,
+        distance = 3.0
+    },
+}
 
 Config.BankMoney = false -- Set to true if you want the money to go into the players bank
 
@@ -29,35 +29,39 @@ Config.Inventory = 'ox' -- supported: 'ox' or 'qb'
 Config.PawnItems = {
     [1] = {
         item = 'goldchain',
-        price = math.random(50,100)
+        price = math.random(600, 800)
     },
     [2] = {
         item = 'diamond_ring',
-        price = math.random(50,100)
+        price = math.random(600, 800)
     },
     [3] = {
         item = 'rolex',
-        price = math.random(50,100)
+        price = math.random(600, 800)
     },
     [4] = {
         item = 'tenkgoldchain',
-        price = math.random(50,100)
+        price = math.random(600, 800)
     },
     [5] = {
         item = 'tablet',
-        price = math.random(50,100)
+        price = math.random(50, 100)
     },
     [6] = {
         item = 'iphone',
-        price = math.random(50,100)
+        price = math.random(50, 100)
     },
     [7] = {
         item = 'samsungphone',
-        price = math.random(50,100)
+        price = math.random(50, 100)
     },
     [8] = {
         item = 'laptop',
-        price = math.random(50,100)
+        price = math.random(50, 100)
+    },
+    [9] = {
+        item = 'WEAPON_COMBATPISTOL',
+        price = math.random(1300, 1500)
     }
 }
 
