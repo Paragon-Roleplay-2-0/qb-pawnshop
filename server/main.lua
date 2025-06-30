@@ -94,12 +94,6 @@ RegisterNetEvent('qb-pawnshop:server:pickupMelted', function(item)
     TriggerClientEvent('qb-pawnshop:client:openMenu', src)
 end)
 
--- QBCore.Functions.CreateCallback('qb-pawnshop:server:getInv', function(source, cb)
---     local Player = QBCore.Functions.GetPlayer(source)
---     local inventory = Player.PlayerData.items
---     return cb(inventory)
--- end)
-
 lib.callback.register('qb-pawnshop:server:getInv', function(source)
     local Player = QBCore.Functions.GetPlayer(source)
     local inventory = Player.PlayerData.items
