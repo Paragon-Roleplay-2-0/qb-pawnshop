@@ -3,7 +3,7 @@ game 'gta5'
 lua54 'yes'
 author 'Kakarot'
 description 'Allows players to sell items for money'
-version '1.2.0'
+version '1.2.1'
 
 shared_scripts {
     '@qb-core/shared/locale.lua',
