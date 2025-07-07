@@ -25,3 +25,7 @@ client_scripts {
     '@PolyZone/ComboZone.lua',
     'client/main.lua'
 }
+
+dependency {
+    'ox_lib'
+}
