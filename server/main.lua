@@ -41,10 +41,28 @@ RegisterNetEvent('qb-pawnshop:server:sellPawnItems', function(itemName, itemAmou
         else
             Player.Functions.AddMoney('cash', totalPrice, 'qb-pawnshop:server:sellPawnItems')
         end
-        TriggerClientEvent('QBCore:Notify', src, Lang:t('success.sold', { value = tonumber(itemAmount), value2 = QBCore.Shared.Items[itemName].label, value3 = totalPrice }), 'success')
+        if Config.Notify == 'qb' then
+            TriggerClientEvent('QBCore:Notify', src, Lang:t('success.sold', { value = tonumber(itemAmount), value2 = QBCore.Shared.Items[itemName].label, value3 = totalPrice }), 'success')
+        elseif Config.Notify == 'ox' then
+            TriggerClientEvent('ox_lib:notify', src, {
+                title = 'Items Sold',
+                description = Lang:t('success.sold', { value = tonumber(itemAmount), value2 = QBCore.Shared.Items[itemName].label, value3 = totalPrice }),
+                position = 'center-right',
+                type = 'success'
+            })
+        end
         TriggerClientEvent('qb-inventory:client:ItemBox', src, QBCore.Shared.Items[itemName], 'remove')
     else
-        TriggerClientEvent('QBCore:Notify', src, Lang:t('error.no_items'), 'error')
+        if Config.Notify == 'qb' then
+            TriggerClientEvent('QBCore:Notify', src, Lang:t('error.no_items'), 'error')
+        elseif Config.Notify == 'ox' then
+            TriggerClientEvent('ox_lib:notify', src, {
+                title = 'Missing Items',
+                description = Lang:t('error.no_items'),
+                position = 'center-right',
+                type = 'error'
+            })
+        end
     end
     TriggerClientEvent('qb-pawnshop:client:openMenu', src)
 end)
@@ -56,9 +74,27 @@ RegisterNetEvent('qb-pawnshop:server:meltItemRemove', function(itemName, itemAmo
         TriggerClientEvent('qb-inventory:client:ItemBox', src, QBCore.Shared.Items[itemName], 'remove')
         local meltTime = (tonumber(itemAmount) * item.time)
         TriggerClientEvent('qb-pawnshop:client:startMelting', src, item, tonumber(itemAmount), (meltTime * 60000 / 1000))
-        TriggerClientEvent('QBCore:Notify', src, Lang:t('info.melt_wait', { value = meltTime }), 'primary')
+        if Config.Notify == 'qb' then
+            TriggerClientEvent('QBCore:Notify', src, Lang:t('info.melt_wait', { value = meltTime }), 'primary')
+        elseif Config.Notify == 'ox' then
+            TriggerClientEvent('ox_lib:notify', src, {
+                title = 'Melting Items',
+                description = Lang:t('info.melt_wait', { value = meltTime }),
+                position = 'center-right',
+                type = 'inform'
+            })
+        end
     else
-        TriggerClientEvent('QBCore:Notify', src, Lang:t('error.no_items'), 'error')
+        if Config.Notify == 'qb' then
+            TriggerClientEvent('QBCore:Notify', src, Lang:t('error.no_items'), 'error')
+        elseif Config.Notify == 'ox' then
+            TriggerClientEvent('ox_lib:notify', src, {
+                title = 'Missing Items',
+                description = Lang:t('error.no_items'),
+                position = 'center-right',
+                type = 'error'
+            })
+        end
     end
 end)
 
@@ -84,10 +120,29 @@ RegisterNetEvent('qb-pawnshop:server:pickupMelted', function(item)
             local rewardAmount = m.amount
             if exports['qb-inventory']:AddItem(src, m.item, (meltedAmount * rewardAmount), false, false, 'qb-pawnshop:server:pickupMelted') then
                 TriggerClientEvent('qb-inventory:client:ItemBox', src, QBCore.Shared.Items[m.item], 'add')
-                TriggerClientEvent('QBCore:Notify', src, Lang:t('success.items_received', { value = (meltedAmount * rewardAmount), value2 = QBCore.Shared.Items[m.item].label }), 'success')
+                if Config.Notify == 'qb' then
+                    TriggerClientEvent('QBCore:Notify', src, Lang:t('success.items_received', { value = (meltedAmount * rewardAmount), value2 = QBCore.Shared.Items[m.item].label }), 'success')
+                elseif Config.Notify == 'ox' then
+                    TriggerClientEvent('ox_lib:notify', src, {
+                        title = 'Items Received',
+                        description = Lang:t('success.items_received', { value = (meltedAmount * rewardAmount), value2 = QBCore.Shared.Items[m.item].label }),
+                        position = 'center-right',
+                        type = 'success'
+                    })
+                end
                 TriggerClientEvent('qb-pawnshop:client:resetPickup', src)
             else
-                TriggerClientEvent('QBCore:Notify', src, Lang:t('error.inventory_full', { value = QBCore.Shared.Items[m.item].label }), 'warning', 7500)
+                if Config.Notify == 'qb' then
+                    TriggerClientEvent('QBCore:Notify', src, Lang:t('error.inventory_full', { value = QBCore.Shared.Items[m.item].label }), 'warning', 7500)
+                elseif Config.Notify == 'ox' then
+                    TriggerClientEvent('ox_lib:notify', src, {
+                        title = 'Inventory Full',
+                        description = Lang:t('error.inventory_full', { value = QBCore.Shared.Items[m.item].label }),
+                        duration = 7500,
+                        position = 'center-right',
+                        type = 'warning'
+                    })
+                end
             end
         end
     end

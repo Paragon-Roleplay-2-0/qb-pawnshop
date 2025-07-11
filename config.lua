@@ -24,6 +24,8 @@ Config.SendMeltingEmail = true
 
 Config.UseTarget = GetConvar('UseTarget', 'false') == 'true'
 
+Config.Notify = 'ox' -- supported: 'ox' or 'qb'
+
 Config.Inventory = 'ox' -- supported: 'ox' or 'qb'
 
 Config.PawnItems = {

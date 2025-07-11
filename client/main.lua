@@ -61,6 +61,7 @@ CreateThread(function()
                     id = 'header_menu',
                     title = Lang:t('info.title'),
                     canClose = true,
+                    position = 'offcenter-right', -- Lation UI
                     options = {
                         {
                             title = Lang:t('info.title'),
@@ -123,12 +124,22 @@ RegisterNetEvent('qb-pawnshop:client:openMenu', function()
                 id = 'shop_menu',
                 title = Lang:t('info.title'),
                 canClose = true,
+                position = 'offcenter-right', -- Lation UI
                 options = menuOptions
             })
 
             lib.showContext('shop_menu')
         else
-            QBCore.Functions.Notify(Lang:t('info.pawn_closed', { value = Config.TimeOpen, value2 = Config.TimeClosed }))
+            if Config.Notify == 'qb' then
+                QBCore.Functions.Notify(Lang:t('info.pawn_closed', { value = Config.TimeOpen, value2 = Config.TimeClosed }))
+            elseif Config.Notify == 'ox' then
+                lib.notify({
+                    title = 'Pawnshop Closed',
+                    description = Lang:t('info.pawn_closed', { value = Config.TimeOpen, value2 = Config.TimeClosed }),
+                    position = 'center-right',
+                    type = 'error'
+                })
+            end
         end
     else
         local menuOptions = {
@@ -171,6 +182,7 @@ RegisterNetEvent('qb-pawnshop:client:openMenu', function()
             id = 'shop_menu',
             title = Lang:t('info.title'),
             canClose = true,
+            position = 'offcenter-right', -- Lation UI
             options = menuOptions
         })
 
@@ -205,6 +217,7 @@ RegisterNetEvent('qb-pawnshop:client:openPawn', function(data)
                 id = 'pawn_menu',
                 title = Lang:t('info.title'),
                 menu = 'shop_menu',
+                position = 'offcenter-right', -- Lation UI
                 options = menuOptions
             })
 
@@ -233,6 +246,7 @@ RegisterNetEvent('qb-pawnshop:client:openPawn', function(data)
                 id = 'pawn_menu',
                 title = Lang:t('info.title'),
                 menu = 'shop_menu',
+                position = 'offcenter-right', -- Lation UI
                 options = menuOptions
             })
 
@@ -269,6 +283,7 @@ RegisterNetEvent('qb-pawnshop:client:openMelt', function(data)
                 id = 'melt_menu',
                 title = Lang:t('info.melt'),
                 menu = 'shop_menu',
+                position = 'offcenter-right', -- Lation UI
                 options = menuOptions
             })
 
@@ -298,6 +313,7 @@ RegisterNetEvent('qb-pawnshop:client:openMelt', function(data)
                 id = 'melt_menu',
                 title = Lang:t('info.melt'),
                 menu = 'shop_menu',
+                position = 'offcenter-right', -- Lation UI
                 options = menuOptions
             })
 
@@ -330,10 +346,28 @@ RegisterNetEvent('qb-pawnshop:client:pawnitems', function(item)
             if tonumber(sellingItem[1]) <= item.amount then
                 TriggerServerEvent('qb-pawnshop:server:sellPawnItems', item.name, tonumber(sellingItem[1]), item.price)
             else
-                QBCore.Functions.Notify(Lang:t('error.no_items'), 'error')
+                if Config.Notify == 'qb' then
+                    QBCore.Functions.Notify(Lang:t('error.no_items'), 'error')
+                elseif Config.Notify == 'ox' then
+                    lib.notify({
+                        title = 'Items Missing',
+                        description = Lang:t('error.no_items'),
+                        position = 'center-right',
+                        type = 'error'
+                    })
+                end
             end
         else
-            QBCore.Functions.Notify(Lang:t('error.negative'), 'error')
+            if Config.Notify == 'qb' then
+                QBCore.Functions.Notify(Lang:t('error.negative'), 'error')
+            elseif Config.Notify == 'ox' then
+                lib.notify({
+                    title = 'Input Error',
+                    description = Lang:t('error.negative'),
+                    position = 'center-right',
+                    type = 'error'
+                })
+            end
         end
     end
 end)
@@ -360,10 +394,28 @@ RegisterNetEvent('qb-pawnshop:client:meltItems', function(item)
             if tonumber(meltingItem[1]) > 0 then
                 TriggerServerEvent('qb-pawnshop:server:meltItemRemove', item.name, tonumber(meltingItem[1]), item)
             else
-                QBCore.Functions.Notify(Lang:t('error.no_melt'), 'error')
+                if Config.Notify == 'qb' then
+                    QBCore.Functions.Notify(Lang:t('error.no_melt'), 'error')
+                elseif Config.Notify == 'ox' then
+                    lib.notify({
+                        title = 'Items Missing',
+                        description = Lang:t('error.no_melt'),
+                        position = 'center-right',
+                        type = 'error'
+                    })
+                end
             end
         else
-            QBCore.Functions.Notify(Lang:t('error.no_melt'), 'error')
+            if Config.Notify == 'qb' then
+                QBCore.Functions.Notify(Lang:t('error.no_melt'), 'error')
+            elseif Config.Notify == 'ox' then
+                lib.notify({
+                    title = 'Items Missing',
+                    description = Lang:t('error.no_melt'),
+                    position = 'center-right',
+                    type = 'error'
+                })
+            end
         end
     end
 end)
@@ -389,7 +441,16 @@ RegisterNetEvent('qb-pawnshop:client:startMelting', function(item, meltingAmount
                                 button = {}
                             })
                         else
-                            QBCore.Functions.Notify(Lang:t('info.message'), 'success')
+                            if Config.Notify == 'qb' then
+                                QBCore.Functions.Notify(Lang:t('info.message'), 'success')
+                            elseif Config.Notify == 'ox' then
+                                lib.notify({
+                                    title = 'Items Melted',
+                                    description = Lang:t('info.message'),
+                                    position = 'center-right',
+                                    type = 'success'
+                                })
+                            end
                         end
                     end
                 else
